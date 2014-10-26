@@ -3,10 +3,20 @@ var
     app = express(),
     fs = require("fs"), jsonFile;
 
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/app/cms'));
 
-function readJsonFileSync(filepath, encoding){
+jsonFile = readJsonFile('app/cms/data.json');
 
+jsonFile.images[1].path = 'cms/images/iknowthatfeel.jpg';
+jsonFile.images[1].alt = 'A picture of a bear and a man sitting at a river bank'
+//
+writeJsonFile();
+
+app.listen(3000);
+console.log('listening on port 3000');
+
+//Read/write
+function readJsonFile(filepath, encoding){
     if (typeof (encoding) == 'undefined'){
         encoding = 'utf8';
     }
@@ -14,22 +24,14 @@ function readJsonFileSync(filepath, encoding){
     return JSON.parse(file);
 }
 
-function writeToJSONFile() {
-    fs.writeFile('app/data2.json', JSON.stringify(jsonFile, null, 4), function (err) {
+function writeJsonFile() {
+    fs.writeFile('app/cms/data.json', JSON.stringify(jsonFile, null, 4), function (err) {
         if (err) throw err;
         console.log('It\'s saved!');
     });
 }
 
-jsonFile = readJsonFileSync('app/data.json');
-
-jsonFile.discography.artist = 'Some Other Band';
-
-console.log('Artist: ' + jsonFile.discography.artist);
-
-writeToJSONFile();
-
-
+//Helper methods
 function getValue(obj, key){
     var valueArray = [];
     searchObj(obj);
@@ -57,6 +59,3 @@ function getValue(obj, key){
         return valueArray;
     }
 }
-
-app.listen(3000);
-console.log('listening on port 3000');
