@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                 //"build/*.js", "!build/NodeMaker-min.js", "!build/Files.js"
             },
             sass: {
-                src: ["build/css/*.scss"]
+                src: ["build/css/*.scss", "build/sass/"]
             },
             bower: {
                 src: ["bower_components", "bower.json", "README.md"]
@@ -118,7 +118,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'build/css/main.css': 'app/css/main.scss'
+                    'build/css/main.css': 'app/sass/gumby.scss'
                 }
             }
         },
@@ -135,6 +135,11 @@ module.exports = function(grunt) {
                 options: {
                     beautify: true
                 }
+            }
+        },
+        shell: {
+            comp: {
+                command: 'compass compile'
             }
         }
     });
@@ -165,6 +170,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-open');
     //HTML build
     grunt.loadNpmTasks('grunt-html-build');
+    //Shell
+    grunt.loadNpmTasks('grunt-shell');
 
     //REGISTER TASKS
 
@@ -182,7 +189,8 @@ module.exports = function(grunt) {
     grunt.registerTask(
         "compass",
         "Compiles sass file to css.",
-        ["sass", "clean:sass"]
+//        ["sass", "clean:sass"]
+        ["shell:comp", "clean:sass"]
     );
 
     //Build
