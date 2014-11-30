@@ -44,4 +44,5 @@ dwsync.xml
 .CVS
 .idea
 
+#node
 node_modules

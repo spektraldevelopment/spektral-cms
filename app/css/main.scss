@@ -1,0 +1,71 @@
+////////////////
+///MAIN SASS FILE
+////////////////
+
+//VARIABLES
+$black: #000;
+$dark-blue: #225378;
+$med-blue: #1695a3;
+$light-blue: #acf0f2;
+$white: #fff;
+$orange: #eb7f00;
+
+//MIXINS
+@mixin header($size: 25px)
+{
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: $size;
+}
+
+@mixin paragraph($size: 18px)
+{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: $size;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+@mixin transparentBG($color, $alpha)
+{
+  background-color: rgba(red($color), green($color), blue($color), $alpha);
+}
+
+@mixin shadow($hOffset: inset, $vOffset: 0px, $blur: 0px, $spread: 5px, $color: #000)
+{
+  -moz-box-shadow: $hOffset $vOffset $blur $spread $color;
+  -webkit-box-shadow: $hOffset $vOffset $blur $spread $color;
+  box-shadow: $hOffset $vOffset $blur $spread $color;
+}
+
+@mixin textShadow($X: 1px, $Y: 1px, $blur: 3px, $color: #888)
+{
+  text-shadow: $X $Y $blur $color;
+}
+
+@mixin rounded-corners($radius: 5px)
+{
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+//ELEMENTS
+body {
+  margin: 0;
+  padding: 20px;
+}
+
+//IDS
+#mainHeader {
+
+}
+
+#mainContent {
+
+}
+
+#mainFooter {
+
+}
