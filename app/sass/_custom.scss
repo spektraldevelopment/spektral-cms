@@ -52,21 +52,40 @@ $orange: #eb7f00;
   border-radius: $radius;
 }
 
-//ELEMENTS
-body {
-  margin: 0;
-  padding: 20px;
+h1 {
+  padding: 12px;
 }
 
-//IDS
-#mainHeader {
+//Post Screen
+#postScreen {
 
-}
+  #postContainer {
+    background-color: #cecece;
+    padding: 10px;
+    ul {
+      li {
+        margin: 10px 0px;
+      }
 
-#mainContent {
+      .longitude {
+        float: right;
+      }
+    }
 
-}
+    div {
+      position: relative;
+      float: right;
+    }
+  }
 
-#mainFooter {
+  #postList {
+    background-color: #8bbfd1;
+    padding: 10px;
 
+    div {
+      position: relative;
+      display: block;
+      margin: 5px auto;
+    }
+  }
 }

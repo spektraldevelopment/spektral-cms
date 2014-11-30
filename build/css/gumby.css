@@ -1685,4 +1685,11 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 
 .ie9 .radio.checked i, .ie9 .checkbox.checked i { top: 0; }
 
-body { margin: 0; padding: 20px; }
+h1 { padding: 12px; }
+
+#postScreen #postContainer { background-color: #cecece; padding: 10px; }
+#postScreen #postContainer ul li { margin: 10px 0px; }
+#postScreen #postContainer ul .longitude { float: right; }
+#postScreen #postContainer div { position: relative; float: right; }
+#postScreen #postList { background-color: #8bbfd1; padding: 10px; }
+#postScreen #postList div { position: relative; display: block; margin: 5px auto; }
