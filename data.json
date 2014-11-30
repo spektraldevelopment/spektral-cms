@@ -1,0 +1,20 @@
+{
+    "images": [
+        {
+            "path": "cms/images/bunny.jpg",
+            "alt": "A picture of a surprised bunny rabbit"
+        },
+        {
+            "path": "cms/images/iknowthatfeel.jpg",
+            "alt": "A picture of a bear and a man sitting at a river bank"
+        },
+        {
+            "path": "cms/images/cookiemonster.jpg",
+            "alt": "A picture of cookie monster in truck with a bunch of rebels"
+        },
+        {
+            "path": "cms/images/lemongrab.jpg",
+            "alt": "A picture of lemongrab"
+        }
+    ]
+}
