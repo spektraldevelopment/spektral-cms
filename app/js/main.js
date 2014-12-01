@@ -18,11 +18,11 @@ Gumby.ready(function() {
         Gumby.warn("This is an oldie browser...");
 
 // Touch devices loaded
-    }).touch(function() {
-        Gumby.log("This is a touch enabled device...");
-    });
-
+}).touch(function() {
+    Gumby.log("This is a touch enabled device...");
+});
 
 function init() {
+    PostScreen.init();
     console.log('main init');
 }

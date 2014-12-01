@@ -52,40 +52,42 @@ $orange: #eb7f00;
   border-radius: $radius;
 }
 
-h1 {
-  padding: 12px;
-}
+#mainContainer {
+  h1 {
+    padding: 12px;
+  }
 
-//Post Screen
-#postScreen {
+  //Post Screen
+  #postScreen {
 
-  #postContainer {
-    background-color: #cecece;
-    padding: 10px;
-    ul {
-      li {
-        margin: 10px 0px;
+    #postContainer {
+      background-color: #cecece;
+      padding: 10px;
+      ul {
+        li {
+          margin: 10px 0px;
+        }
+
+        .longitude {
+          float: right;
+        }
       }
 
-      .longitude {
+      div {
+        position: relative;
         float: right;
       }
     }
 
-    div {
-      position: relative;
-      float: right;
-    }
-  }
+    #postList {
+      background-color: #8bbfd1;
+      padding: 10px;
 
-  #postList {
-    background-color: #8bbfd1;
-    padding: 10px;
-
-    div {
-      position: relative;
-      display: block;
-      margin: 5px auto;
+      div {
+        position: relative;
+        display: block;
+        margin: 5px auto;
+      }
     }
   }
 }

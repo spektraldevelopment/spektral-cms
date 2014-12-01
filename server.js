@@ -3,7 +3,7 @@ var
     app = express(),
     fs = require("fs"), jsonFile;
 
-app.use(express.static(__dirname + '/app/'));
+app.use(express.static(__dirname + '/build/'));
 
 jsonFile = readJsonFile('data.json');
 

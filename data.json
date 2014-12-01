@@ -1,20 +1,28 @@
 {
-    "images": [
+    "posts": [
         {
-            "path": "cms/images/bunny.jpg",
-            "alt": "A picture of a surprised bunny rabbit"
+            "title": "Test Title",
+            "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "pictures" : [
+                {
+                    "url" : "path/to/picture.jpg",
+                    "alt" : "Alternate description"
+                }
+            ],
+            "longitude" : "43.693131",
+            "latitude" : "-79.405994"
         },
         {
-            "path": "cms/images/iknowthatfeel.jpg",
-            "alt": "A picture of a bear and a man sitting at a river bank"
-        },
-        {
-            "path": "cms/images/cookiemonster.jpg",
-            "alt": "A picture of cookie monster in truck with a bunch of rebels"
-        },
-        {
-            "path": "cms/images/lemongrab.jpg",
-            "alt": "A picture of lemongrab"
+            "title": "Test Title 2",
+            "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "pictures" : [
+                {
+                    "url" : "path/to/picture2.jpg",
+                    "alt" : "Alternate description2"
+                }
+            ],
+            "longitude" : "43.693131",
+            "latitude" : "-79.405994"
         }
     ]
 }
