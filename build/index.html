@@ -13,7 +13,7 @@
              More info: h5bp.com/b/378 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>Gumby - A Flexible, Responsive CSS Framework - Powered by SASS</title>
+    <title>Post CMS</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="humans.txt">
@@ -61,9 +61,15 @@
                     <input class="input" type="text" placeholder="Longitude" />
                 </li>
             </ul>
-            <div class="medium info btn icon-left entypo icon-picture">
-                <a id="uploadPicture" href="#">Upload</a>
-            </div>
+            <!--<div class="medium info btn icon-left entypo icon-picture">-->
+                <!--<a id="uploadPicture" href="#">Upload</a>-->
+                <!--<input class="input" type="file" name="displayImage"/>-->
+            <!--</div>-->
+            <form id="uploadPicture" method="post" enctype="multipart/form-data" action="/file-upload">
+                <input type="file" name="thumbnail">
+                <input type="submit">
+            </form>
+           <!--<button id="submitButton">Submit</button>-->
         </div>
         <div id="postList" class="three columns">
             <div class="large info btn icon-left entypo icon-picture">

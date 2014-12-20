@@ -5,6 +5,37 @@ var
 
 app.use(express.static(__dirname + '/build/'));
 
+//app.get(__dirname + "/build", function (req, res) {
+//    console.log('app.post: ' + JSON.stringify(req));
+//    fs.readFile(req.files.displayImage.path, function (err, data) {
+//        console.log('readFile');
+//        var newPath = __dirname + "/build/img/uploads";
+//        fs.writeFile(newPath, data, function (err) {
+//            if (err) throw err;
+//            console.log('It\'s saved!');
+//            res.redirect("back");
+//        });
+//    });
+//})
+
+app.post('/file-upload', function(req, res) {
+    // get the temporary location of the file
+    console.log("AHAHAHHA");
+    var tmp_path = req.files.thumbnail.path;
+    // set where the file should actually exists - in this case it is in the "images" directory
+    var target_path = '/img/uploads/' + req.files.thumbnail.name;
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if (err) throw err;
+            res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
+        });
+    });
+});
+
+
 jsonFile = readJsonFile('data.json');
 
 //jsonFile.images[1].path = 'cms/images/iknowthatfeel.jpg';
@@ -14,6 +45,10 @@ jsonFile = readJsonFile('data.json');
 
 app.listen(3000);
 console.log('listening on port 3000');
+
+////////////////////////
+////UTILS
+////////////////////////
 
 //Read/write
 function readJsonFile(filepath, encoding){
