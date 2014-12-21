@@ -17,9 +17,10 @@ app.use(multer({
 app.use(express.static(__dirname + '/build'));
 
 app.post('/api/upload', function (req, res) {
-//    if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
+    res.redirect('back');
+    //if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
 //        img.info(req.files.userFile.path, function (err, stdout, stderr) {
-//            //if (err) throw err;
+////            //if (err) throw err;
 //            img.rescrop(
 //                {
 //                    src: req.files.userFile.path, dst: fnAppend(req.files.userFile.path, 'thumb'),
