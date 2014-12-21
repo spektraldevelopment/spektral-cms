@@ -21,7 +21,9 @@
     "grunt-html-build": "^0.3.2",
     "grunt-notify": "^0.3.1",
     "grunt-open": "^0.2.3",
-    "grunt-shell": "^1.1.1"
+    "grunt-shell": "^1.1.1",
+    "easyimage": "0.x",
+    "multer": "0.x"
   },
   "repository": {
     "type": "git",

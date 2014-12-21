@@ -65,11 +65,13 @@
                 <!--<a id="uploadPicture" href="#">Upload</a>-->
                 <!--<input class="input" type="file" name="displayImage"/>-->
             <!--</div>-->
-            <form id="uploadPicture" method="post" enctype="multipart/form-data" action="/file-upload">
-                <input type="file" name="thumbnail">
-                <input type="submit">
+            <form id="uploadForm"
+                  enctype="multipart/form-data"
+                  action="/api/upload"
+                  method="post">
+                <input type="file" id="userFileInput" name="userFile"/>
             </form>
-           <!--<button id="submitButton">Submit</button>-->
+            <button id="submitButton">SUBMIT</button>
         </div>
         <div id="postList" class="three columns">
             <div class="large info btn icon-left entypo icon-picture">
