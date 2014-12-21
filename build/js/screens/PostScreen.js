@@ -16,7 +16,7 @@
         console.log('PostScreen init');
     }
 
-    function onPicSubmit(evt) {
+    function onPicSubmit() {
         var formData = new FormData();
         var file = document.getElementById('userFileInput').files[0];
         formData.append('userFile', file);
@@ -33,8 +33,8 @@
             status('error while trying to upload');
         };
         xhr.onload = function (e) {
-//            $('#userFileInput').val('');
-//            //setProgress(0);
+            $('#userFileInput').val('');
+            //setProgress(0);
 //            var resJson = JSON.parse(xhr.responseText);
 //            console.log(resJson.file + ' done, choose a file');
 //

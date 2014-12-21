@@ -7,68 +7,34 @@ var
     jsonFile,
     imgs = ['png', 'jpg', 'jpeg', 'gif', 'bmp']; // only make thumbnail for these
 
-//app.use(express.static(__dirname + '/build/'));
+app.use(multer({
+    dest: './build/img/uploads/',
+    rename: function (fieldname, filename) {
+        return filename.replace(/\W+/g, '-').toLowerCase();
+    }
+}));
 
-//app.configure(function () {
-    app.use(multer({
-        dest: './build/img/uploads/',
-        rename: function (fieldname, filename) {
-            return filename.replace(/\W+/g, '-').toLowerCase();
-        }
-    }));
-    app.use(express.static(__dirname + '/build'));
-//});
-
-//app.get(__dirname + "/build", function (req, res) {
-//    console.log('app.post: ' + JSON.stringify(req));
-//    fs.readFile(req.files.displayImage.path, function (err, data) {
-//        console.log('readFile');
-//        var newPath = __dirname + "/build/img/uploads";
-//        fs.writeFile(newPath, data, function (err) {
-//            if (err) throw err;
-//            console.log('It\'s saved!');
-//            res.redirect("back");
-//        });
-//    });
-//})
-
-//app.post('/file-upload', function(req, res) {
-//    // get the temporary location of the file
-//    console.log("AHAHAHHA");
-//    var tmp_path = req.files.thumbnail.path;
-//    // set where the file should actually exists - in this case it is in the "images" directory
-//    var target_path = '/img/uploads/' + req.files.thumbnail.name;
-//    // move the file from the temporary location to the intended location
-//    fs.rename(tmp_path, target_path, function(err) {
-//        if (err) throw err;
-//        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-//        fs.unlink(tmp_path, function() {
-//            if (err) throw err;
-//            res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
-//        });
-//    });
-//});
+app.use(express.static(__dirname + '/build'));
 
 app.post('/api/upload', function (req, res) {
-    console.log("CHECK IT OUT: " + imgs.indexOf(getExtension(req.files.userFile.name)));
-    if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
-        img.info(req.files.userFile.path, function (err, stdout, stderr) {
-            //if (err) throw err;
-            console.log(stdout); // could determine if resize needed here
-            img.rescrop(
-                {
-                    src: req.files.userFile.path, dst: fnAppend(req.files.userFile.path, 'thumb'),
-                    width: 50, height: 50
-                },
-                function (err, image) {
-                    //if (err) throw err;
-                    res.send({image: true, file: req.files.userFile.originalname, savedAs: req.files.userFile.name, thumb: fnAppend(req.files.userFile.name, 'thumb')});
-                }
-            );
-        });
-    } else {
-        res.send({image: false, file: req.files.userFile.originalname, savedAs: req.files.userFile.name});
-    }
+//    if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
+//        img.info(req.files.userFile.path, function (err, stdout, stderr) {
+//            //if (err) throw err;
+//            img.rescrop(
+//                {
+//                    src: req.files.userFile.path, dst: fnAppend(req.files.userFile.path, 'thumb'),
+//                    width: 50, height: 50
+//                },
+//                function (err, image) {
+//                    //if (err) throw err;
+//                    //res.send({image: true, file: req.files.userFile.originalname, savedAs: req.files.userFile.name, thumb: fnAppend(req.files.userFile.name, 'thumb')});
+//                    console.log('Imaged saved to: ' + req.files.userFile.name);
+//                }
+//            );
+//        });
+//    } else {
+//        //res.send({image: false, file: req.files.userFile.originalname, savedAs: req.files.userFile.name});
+//    }
 });
 
 
