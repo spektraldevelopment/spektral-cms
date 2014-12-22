@@ -4,7 +4,7 @@ var
     fs = require("fs"),
     img = require('easyimage'),
     multer = require('multer'),
-    jsonFile,
+    jsonFile, tempImageArray = [],
     imgs = ['png', 'jpg', 'jpeg', 'gif', 'bmp']; // only make thumbnail for these
 
 app.use(multer({
@@ -17,6 +17,10 @@ app.use(multer({
 app.use(express.static(__dirname + '/build'));
 
 app.post('/api/upload', function (req, res) {
+    //res.send({file: req.files.userFile.originalname, savedAs: req.files.userFile.name}).redirect('back');
+    tempImageArray.push({file: req.files.userFile.name});
+    //console.log('imageArray: ' + tempImageArray);
+    tempImageArray.forEach(logArray);
     res.redirect('back');
     //if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
 //        img.info(req.files.userFile.path, function (err, stdout, stderr) {
@@ -36,6 +40,10 @@ app.post('/api/upload', function (req, res) {
 //    } else {
 //        //res.send({image: false, file: req.files.userFile.originalname, savedAs: req.files.userFile.name});
 //    }
+});
+
+app.get('/api/getPicList', function(req, res){
+    res.send(tempImageArray);
 });
 
 
@@ -108,4 +116,8 @@ function fnAppend(fn, insert) {
     var ext = arr.pop();
     insert = (insert !== undefined) ? insert : new Date().getTime();
     return arr + '.' + insert + '.' + ext;
+}
+
+function logArray(element, index, array) {
+    console.log(JSON.stringify(element));
 }

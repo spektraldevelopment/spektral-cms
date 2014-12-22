@@ -61,18 +61,15 @@
                     <input class="input" type="text" placeholder="Longitude" />
                 </li>
             </ul>
-            <!--<div class="medium info btn icon-left entypo icon-picture">-->
-                <!--<a id="uploadPicture" href="#">Upload</a>-->
-                <!--<input class="input" type="file" name="displayImage"/>-->
-            <!--</div>-->
-            <!-- action="/api/upload" -->
             <form id="uploadForm"
                   enctype="multipart/form-data"
                   action="/api/upload"
                   method="post">
                 <input type="file" id="userFileInput" name="userFile"/>
             </form>
-            <button id="submitButton">Upload Pic</button>
+            <button id="submitButton">Upload Picture</button>
+            <ul id="uploadList"></ul>
+            <button id="createPost">Create Post</button>
         </div>
         <div id="postList" class="three columns">
             <div class="large info btn icon-left entypo icon-picture">

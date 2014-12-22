@@ -2,16 +2,30 @@
     "use strict";
     //Code goes here
 
-    var PostScreen = {}, uploadPicture, submitButton;
+    var PostScreen = {}, uploadPicture, submitButton, uploadList;
 
     PostScreen.init = function() {
         uploadPicture = document.querySelector('#uploadForm');
         submitButton = document.querySelector('#submitButton');
+        uploadList = document.querySelector('#uploadList');
 
         console.log('submitButton: ' + submitButton);
 
         Spektral.attachEventListener(submitButton, 'click', onSubmitClick);
         Spektral.attachEventListener(uploadPicture, 'submit', onPicSubmit);
+
+        var picReq = new XMLHttpRequest();
+
+        picReq.onload = function(e){
+            var listRes = JSON.parse(picReq.responseText);
+
+            if(listRes.length > 0) {
+                populatePicList(listRes);
+            }
+        };
+
+        picReq.open('GET', '/api/getPicList', true);
+        picReq.send();
 
         console.log('PostScreen init');
     }
@@ -20,7 +34,6 @@
         var formData = new FormData();
         var file = document.getElementById('userFileInput').files[0];
         formData.append('userFile', file);
-        alert('file: ' + file);
         var xhr = new XMLHttpRequest();
         xhr.overrideMimeType('application/json');
         xhr.open('post', '/file-upload', true);
@@ -34,9 +47,11 @@
         };
         xhr.onload = function (e) {
             $('#userFileInput').val('');
+            console.log('LOAD!!!: ' + JSON.parse(xhr.responseText));
             //setProgress(0);
 //            var resJson = JSON.parse(xhr.responseText);
-//            console.log(resJson.file + ' done, choose a file');
+//
+//            console.log('Response: ' + JSON.stringify(resJson));
 //
 //            if (resJson.image) {
 //                console.log('Image url: /img/uploads/' + resJson.savedAs);
@@ -52,6 +67,17 @@
     function onSubmitClick(evt) {
         uploadPicture.submit();
         console.log('onSubmitClick');
+    }
+
+    function populatePicList(list) {
+
+        var listItem, fileName;
+        list.forEach(function(item){
+
+            listItem = Spektral.addElement(uploadList, 'li');
+            fileName = Spektral.addElement(listItem, 'p', { innerHTML: item.file});
+            //console.log('item: ' + item.file);
+        });
     }
 
     window.PostScreen = PostScreen;
