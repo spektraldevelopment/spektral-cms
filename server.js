@@ -2,7 +2,7 @@ var
     express = require('express'),
     app = express(),
     fs = require("fs"),
-    img = require('easyimage'),
+    easyImg = require('easyimage'),
     multer = require('multer'),
     jsonFile, tempImageArray = [],
     imgs = ['png', 'jpg', 'jpeg', 'gif', 'bmp']; // only make thumbnail for these
@@ -21,8 +21,30 @@ app.post('/api/upload', function (req, res) {
     tempImageArray.push({file: req.files.userFile.name});
     //console.log('imageArray: ' + tempImageArray);
     tempImageArray.forEach(logArray);
-    res.redirect('back');
-    //if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
+//    res.redirect('back');
+    if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
+
+        easyImg.info(req.files.userFile.path).then(
+            function(file) {
+                console.log("INFO!!!: " + file);
+            }, function (err) {
+                console.log("AWW FUCK!!!: " + err);
+            }
+        );
+
+        easyImg.rescrop({
+            src: req.files.userFile.path, dst:'/build/img/uploads/thumbs/' + req.files.userFile.name,
+            width:500, height:500,
+            cropwidth:128, cropheight:128,
+            x:0, y:0
+        }).then(
+            function(image) {
+                console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
+            },
+            function (err) {
+                console.log(err);
+            }
+        );
 //        img.info(req.files.userFile.path, function (err, stdout, stderr) {
 ////            //if (err) throw err;
 //            img.rescrop(
@@ -39,7 +61,8 @@ app.post('/api/upload', function (req, res) {
 //        });
 //    } else {
 //        //res.send({image: false, file: req.files.userFile.originalname, savedAs: req.files.userFile.name});
-//    }
+    }
+    res.redirect('back');
 });
 
 app.get('/api/getPicList', function(req, res){
