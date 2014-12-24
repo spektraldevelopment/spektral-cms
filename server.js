@@ -2,7 +2,8 @@ var
     express = require('express'),
     app = express(),
     fs = require("fs"),
-    easyImg = require('easyimage'),
+    //easyImg = require('easyimage'),
+    lwip = require('lwip'),
     multer = require('multer'),
     jsonFile, tempImageArray = [],
     imgs = ['png', 'jpg', 'jpeg', 'gif', 'bmp']; // only make thumbnail for these
@@ -19,50 +20,23 @@ app.use(express.static(__dirname + '/build'));
 app.post('/api/upload', function (req, res) {
     //res.send({file: req.files.userFile.originalname, savedAs: req.files.userFile.name}).redirect('back');
     tempImageArray.push({file: req.files.userFile.name});
-    //console.log('imageArray: ' + tempImageArray);
     tempImageArray.forEach(logArray);
-//    res.redirect('back');
-    if (imgs.indexOf(getExtension(req.files.userFile.name)) != -1) {
 
-        easyImg.info(req.files.userFile.path).then(
-            function(file) {
-                console.log("INFO!!!: " + file);
-            }, function (err) {
-                console.log("AWW FUCK!!!: " + err);
-            }
-        );
-
-        easyImg.rescrop({
-            src: req.files.userFile.path, dst:'/build/img/uploads/thumbs/' + req.files.userFile.name,
-            width:500, height:500,
-            cropwidth:128, cropheight:128,
-            x:0, y:0
-        }).then(
-            function(image) {
-                console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-            },
-            function (err) {
-                console.log(err);
-            }
-        );
-//        img.info(req.files.userFile.path, function (err, stdout, stderr) {
-////            //if (err) throw err;
-//            img.rescrop(
-//                {
-//                    src: req.files.userFile.path, dst: fnAppend(req.files.userFile.path, 'thumb'),
-//                    width: 50, height: 50
-//                },
-//                function (err, image) {
-//                    //if (err) throw err;
-//                    //res.send({image: true, file: req.files.userFile.originalname, savedAs: req.files.userFile.name, thumb: fnAppend(req.files.userFile.name, 'thumb')});
-//                    console.log('Imaged saved to: ' + req.files.userFile.name);
-//                }
-//            );
-//        });
-//    } else {
-//        //res.send({image: false, file: req.files.userFile.originalname, savedAs: req.files.userFile.name});
-    }
-    res.redirect('back');
+    lwip.open(req.files.userFile.path, function(err, image){
+        if (err) {
+            console.log('Somethings wrong: ' + err);
+        } else {
+            image.batch()
+                .crop(128, 128)       // crop a 200X200 square from center
+                .writeFile('./build/img/uploads/thumbs/' + req.files.userFile.name, function(err){
+                    if (err) {
+                        console.log('Crop error: ' + err);
+                    } else {
+                        console.log('Crop Complete.');
+                    }
+                });
+        }
+    });
 });
 
 app.get('/api/getPicList', function(req, res){
@@ -139,6 +113,16 @@ function fnAppend(fn, insert) {
     var ext = arr.pop();
     insert = (insert !== undefined) ? insert : new Date().getTime();
     return arr + '.' + insert + '.' + ext;
+}
+
+function stripExt(str) {
+    var formats = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'], newStr;
+    formats.forEach(function(fmt){
+        if (str.match(fmt) !== null) {
+            newStr = str.replace(fmt, "");
+        }
+    })
+    return newStr;
 }
 
 function logArray(element, index, array) {
