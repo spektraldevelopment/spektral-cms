@@ -19,39 +19,67 @@ app.use(multer({
 app.use(express.static(__dirname + '/build'));
 
 app.post('/api/upload', function (req, res) {
-    //res.send({file: req.files.userFile.originalname, savedAs: req.files.userFile.name}).redirect('back');
     tempImageArray.push({file: req.files.userFile.name, thumb: stripExt(req.files.userFile.name) + '-thumb.jpg'});
     tempImageArray.forEach(logArray);
-
-    lwip.open(req.files.userFile.path, function(err, image){
-        if (err) {
-            console.log('lwip error: ' + err);
-        } else {
-            image.batch()
-                .contain(256, 256)
-                .crop(64, 64)       // crop a 200X200 square from center
-                .writeFile('./build/img/uploads/thumbs/' + stripExt(req.files.userFile.name) + '-thumb.jpg', function(err){
-                    if (err) {
-                        console.log('Crop error: ' + err);
-                    } else {
-                        console.log('Crop Complete.');
-                    }
-                });
-        }
-    });
-    //This works but feels wrong
-    res.redirect('back');
 });
+
+//app.post('/api/upload', function (req, res) {
+//    //res.send({file: req.files.userFile.originalname, savedAs: req.files.userFile.name}).redirect('back');
+//    tempImageArray.push({file: req.files.userFile.name, thumb: stripExt(req.files.userFile.name) + '-thumb.jpg'});
+//    tempImageArray.forEach(logArray);
+//
+//    lwip.open(req.files.userFile.path, function(err, image){
+//        if (err) {
+//            console.log('lwip error: ' + err);
+//        } else {
+//            image.batch()
+//                .contain(256, 256)
+//                .crop(64, 64)       // crop a 200X200 square from center
+//                .writeFile('./build/img/uploads/thumbs/' + stripExt(req.files.userFile.name) + '-thumb.jpg', function(err){
+//                    if (err) {
+//                        console.log('Crop error: ' + err);
+//                    } else {
+//                        console.log('Crop Complete.');
+//                    }
+//                });
+//        }
+//    });
+//    //This works but feels wrong
+//    res.redirect('back');
+//});
 
 //app.get('/api/getPicList', function(req, res){
 //    res.send(tempImageArray);
 //});
 
 io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        console.log(data);
+
+    socket.on('crop', function(fileData){
+        var
+            pathToImage = "./build/img/uploads/" + fileData.name,
+            thumbPath = './build/img/uploads/thumbs/' + stripExt(fileData.name) + '-thumb.jpg';
+
+        waitForFile(pathToImage, function(){
+            lwip.open(pathToImage, function(err, image){
+                if (err) {
+                    console.log('lwip error: ' + err);
+                } else {
+                    image.batch()
+                        //.contain(256, 256)
+                        .crop(64, 64)       // crop a 200X200 square from center
+                        .writeFile(thumbPath, function(err){
+                            if (err) {
+                                console.log('Crop error: ' + err);
+                            } else {
+                                console.log('Crop Complete.');
+                                socket.emit('thumbCreated', { arr: tempImageArray });
+                            }
+                        });
+                }
+            });
+        });
     });
+
 });
 
 jsonFile = readJsonFile('data.json');
@@ -131,8 +159,18 @@ function stripExt(str) {
         if (str.match(fmt) !== null) {
             newStr = str.replace(fmt, "");
         }
-    })
+    });
     return newStr;
+}
+
+function waitForFile(path, callback) {
+    fs.exists(path, function(exists) {
+        if (exists) {
+            callback();
+        } else {
+            waitForFile(path, callback);
+        }
+    });
 }
 
 function logArray(element, index, array) {

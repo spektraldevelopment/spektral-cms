@@ -1,6 +1,5 @@
-(function(window){
+(function(window, socket){
     "use strict";
-    //Code goes here
 
     var
         PostScreen = {}, uploadPicture, submitButton, uploadList, createPost,
@@ -28,7 +27,9 @@
         Spektral.attachEventListener(latInput, 'click', onInputFocus);
         Spektral.attachEventListener(longInput, 'click', onInputFocus);
 
-        //getPicArray();
+        socket.on('thumbCreated', function(data) {
+            populatePicList(data.arr);
+        });
 
         console.log('PostScreen init');
     }
@@ -55,7 +56,7 @@
     }
 
     function onPicSubmit(e) {
-        e.preventDefault();
+        //e.preventDefault();
         var formData = new FormData();
         var file = document.getElementById('userFileInput').files[0];
         formData.append('userFile', file);
@@ -71,26 +72,32 @@
         xhr.onerror = function (e) {
             status('error while trying to upload');
         };
-//        xhr.onload = function (e) {
-//
-//            $('#userFileInput').val('');
-//            console.log('LOAD!!!: ' + JSON.parse(xhr.responseText));
-//        };
+        xhr.onload = function (e) {
+            $('#userFileInput').val('');
+            console.log('LOAD!!!: ' + JSON.parse(xhr.responseText));
+        };
         xhr.send(formData);
         return false;
     }
 
     function onSubmitClick(evt) {
         uploadPicture.submit();
-        console.log('onSubmitClick');
+
+        var file = document.getElementById('userFileInput').files[0];
+
+        socket.emit('crop', { name: file.name });
     }
 
     function populatePicList(list) {
-        var listItem, fileName;
-        list.forEach(function(item){
+        var listItem, fileName, listLength;
 
-            listItem = Spektral.addElement(uploadList, 'li');
-            fileName = Spektral.addElement(listItem, 'img', { src: './img/uploads/thumbs/' + item.thumb});
+        listLength = uploadList.children.length;
+
+        list.forEach(function(item, index){
+            if (index >= listLength) {
+                listItem = Spektral.addElement(uploadList, 'li');
+                fileName = Spektral.addElement(listItem, 'img', { src: './img/uploads/thumbs/' + item.thumb});
+            }
         });
     }
 
@@ -106,4 +113,4 @@
 
     window.PostScreen = PostScreen;
 
-}(window));
+}(window, socket));
