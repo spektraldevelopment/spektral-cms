@@ -29,7 +29,7 @@ module.exports = function(grunt) {
                 src: ["build"]
             },
             scripts: {
-                src: ["build/js/*.js", "!build/js/main.min.js", "!build/js/spektraltools.min.js"]
+                src: ["build/js/*.js", "!build/js/main.min.js", "!build/js/spektraltools.min.js", "!build/js/socket.js"]
                 //You can add multiple ignore files
                 //"build/*.js", "!build/NodeMaker-min.js", "!build/Files.js"
             },

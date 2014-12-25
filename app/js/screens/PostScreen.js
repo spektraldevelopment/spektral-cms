@@ -28,7 +28,7 @@
         Spektral.attachEventListener(latInput, 'click', onInputFocus);
         Spektral.attachEventListener(longInput, 'click', onInputFocus);
 
-        getPicArray();
+        //getPicArray();
 
         console.log('PostScreen init');
     }

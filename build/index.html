@@ -85,7 +85,6 @@
     </div>
 </section>
 
-
 <!-- Grab Google CDN's jQuery, fall back to local if offline -->
 <!-- 2.0 for modern browsers, 1.10 for .oldie -->
 <script>
@@ -143,6 +142,8 @@ window.attachEvent("onload", downloadJSAtOnload);
 else window.onload = downloadJSAtOnload;
 </script> -->
 
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/socket.js"></script>
 <script src="js/spektraltools.min.js"></script>
 <script src="js/screens/PostScreen.js"></script>
 <script src="js/main.min.js"></script>

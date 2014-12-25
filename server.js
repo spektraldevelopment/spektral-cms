@@ -1,6 +1,8 @@
 var
     express = require('express'),
     app = express(),
+    server = require('http').Server(app),
+    io = require('socket.io')(server),
     fs = require("fs"),
     lwip = require('lwip'),
     multer = require('multer'),
@@ -41,8 +43,15 @@ app.post('/api/upload', function (req, res) {
     res.redirect('back');
 });
 
-app.get('/api/getPicList', function(req, res){
-    res.send(tempImageArray);
+//app.get('/api/getPicList', function(req, res){
+//    res.send(tempImageArray);
+//});
+
+io.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
 });
 
 jsonFile = readJsonFile('data.json');
@@ -52,7 +61,7 @@ jsonFile = readJsonFile('data.json');
 //
 //writeJsonFile();
 
-var server = app.listen(3000, function () {
+server.listen(3000, function () {
     console.log('listening on port %d', server.address().port);
 });
 
