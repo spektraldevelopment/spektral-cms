@@ -2,7 +2,6 @@ var
     express = require('express'),
     app = express(),
     fs = require("fs"),
-    //easyImg = require('easyimage'),
     lwip = require('lwip'),
     multer = require('multer'),
     jsonFile, tempImageArray = [],
@@ -19,16 +18,17 @@ app.use(express.static(__dirname + '/build'));
 
 app.post('/api/upload', function (req, res) {
     //res.send({file: req.files.userFile.originalname, savedAs: req.files.userFile.name}).redirect('back');
-    tempImageArray.push({file: req.files.userFile.name});
+    tempImageArray.push({file: req.files.userFile.name, thumb: stripExt(req.files.userFile.name) + '-thumb.jpg'});
     tempImageArray.forEach(logArray);
 
     lwip.open(req.files.userFile.path, function(err, image){
         if (err) {
-            console.log('Somethings wrong: ' + err);
+            console.log('lwip error: ' + err);
         } else {
             image.batch()
-                .crop(128, 128)       // crop a 200X200 square from center
-                .writeFile('./build/img/uploads/thumbs/' + req.files.userFile.name, function(err){
+                .contain(256, 256)
+                .crop(64, 64)       // crop a 200X200 square from center
+                .writeFile('./build/img/uploads/thumbs/' + stripExt(req.files.userFile.name) + '-thumb.jpg', function(err){
                     if (err) {
                         console.log('Crop error: ' + err);
                     } else {
@@ -37,12 +37,13 @@ app.post('/api/upload', function (req, res) {
                 });
         }
     });
+    //This works but feels wrong
+    res.redirect('back');
 });
 
 app.get('/api/getPicList', function(req, res){
     res.send(tempImageArray);
 });
-
 
 jsonFile = readJsonFile('data.json');
 
@@ -126,5 +127,5 @@ function stripExt(str) {
 }
 
 function logArray(element, index, array) {
-    console.log(JSON.stringify(element));
+    console.log("Array: " + JSON.stringify(element));
 }

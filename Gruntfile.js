@@ -140,6 +140,9 @@ module.exports = function(grunt) {
         shell: {
             comp: {
                 command: 'compass compile'
+            },
+            node: {
+                command: 'node server.js'
             }
         }
     });
@@ -219,6 +222,13 @@ module.exports = function(grunt) {
         "release",
         "Copies all files from build directory and removes any development related code, to make the files ready for release.",
         ["copy:release", "htmlbuild"]
+    );
+
+    //Node - build and run node server.js
+    grunt.registerTask(
+        "node",
+        "Compiles all of the assets and copies the files to the build directory, and runs server.js",
+        ["clean:build", "copy:build", "scripts", "compass", "shell:node"]
     );
 
     //Default - command: grunt default
