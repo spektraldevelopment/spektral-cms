@@ -60,23 +60,27 @@ io.on('connection', function (socket) {
             thumbPath = './build/img/uploads/thumbs/' + stripExt(fileData.name) + '-thumb.jpg';
 
         waitForFile(pathToImage, function(){
-            lwip.open(pathToImage, function(err, image){
-                if (err) {
-                    console.log('lwip error: ' + err);
-                } else {
-                    image.batch()
-                        //.contain(256, 256)
-                        .crop(64, 64)       // crop a 200X200 square from center
-                        .writeFile(thumbPath, function(err){
-                            if (err) {
-                                console.log('Crop error: ' + err);
-                            } else {
-                                console.log('Crop Complete.');
-                                socket.emit('thumbCreated', { arr: tempImageArray });
-                            }
-                        });
-                }
+            createThumb(pathToImage, thumbPath, function(){
+                socket.emit('thumbCreated', { arr: tempImageArray });
             });
+//            lwip.open(pathToImage, function(err, image){
+//                if (err) {
+//                    console.log('lwip error: ' + err);
+//                } else {
+//                    console.log('width: ' + image.width() + ' height: ' + image.height());
+//                    image.batch()
+//                        //.contain(256, 256)
+//                        .crop(64, 64)       // crop a 200X200 square from center
+//                        .writeFile(thumbPath, function(err){
+//                            if (err) {
+//                                console.log('Crop error: ' + err);
+//                            } else {
+//                                console.log('Crop Complete.');
+//                                socket.emit('thumbCreated', { arr: tempImageArray });
+//                            }
+//                        });
+//                }
+//            });
         });
     });
 
@@ -166,9 +170,33 @@ function stripExt(str) {
 function waitForFile(path, callback) {
     fs.exists(path, function(exists) {
         if (exists) {
+            console.log('Exists');
             callback();
         } else {
             waitForFile(path, callback);
+        }
+    });
+}
+
+function createThumb(path, thumbPath, callback) {
+    lwip.open(path, function(err, image){
+        if (err) {
+            console.log('lwip error: ' + err + ' path: ' + path);
+            //createThumb(path, thumbPath, callback);
+        } else {
+            console.log('width: ' + image.width() + ' height: ' + image.height());
+
+            image.batch()
+                .resize(image.width() / 4, image.height() / 4)
+                .crop(64, 64)       // crop a 200X200 square from center
+                .writeFile(thumbPath, function(err){
+                    if (err) {
+                        console.log('Crop error: ' + err);
+                    } else {
+                        console.log('Crop Complete.');
+                        callback();
+                    }
+                });
         }
     });
 }

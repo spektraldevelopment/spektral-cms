@@ -94,7 +94,8 @@
         listLength = uploadList.children.length;
 
         list.forEach(function(item, index){
-            if (index >= listLength) {
+            console.log("CHILDREN: " + uploadList.children[index]);
+            if (uploadList.children[index] === undefined) {
                 listItem = Spektral.addElement(uploadList, 'li');
                 fileName = Spektral.addElement(listItem, 'img', { src: './img/uploads/thumbs/' + item.thumb});
             }
