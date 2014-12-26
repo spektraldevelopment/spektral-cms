@@ -3,8 +3,7 @@
 
     var
         PostScreen = {}, uploadPicture, submitButton, uploadList, createPost,
-        picArray, postObj = {},
-        titleInput, descInput, latInput, longInput;
+        postObj = {}, titleInput, descInput, latInput, longInput;
 
     PostScreen.init = function() {
 
@@ -34,29 +33,12 @@
         console.log('PostScreen init');
     }
 
-    function getPicArray(){
-        var picReq = new XMLHttpRequest();
-
-        picReq.onload = function(e){
-            picArray = JSON.parse(picReq.responseText);
-
-            if(picArray.length > 0) {
-                populatePicList(picArray);
-            }
-            console.log('picArray: ' + picArray);
-        };
-
-        picReq.open('GET', '/api/getPicList', true);
-        picReq.send();
-    }
-
     function onInputFocus(evt){
         console.log('Input focus');
         Spektral.getTarget(evt).placeholder = '';
     }
 
     function onPicSubmit(e) {
-        //e.preventDefault();
         var formData = new FormData();
         var file = document.getElementById('userFileInput').files[0];
         formData.append('userFile', file);
@@ -84,17 +66,13 @@
         uploadPicture.submit();
 
         var file = document.getElementById('userFileInput').files[0];
-
         socket.emit('crop', { name: file.name });
     }
 
     function populatePicList(list) {
         var listItem, fileName, listLength;
 
-        listLength = uploadList.children.length;
-
         list.forEach(function(item, index){
-            console.log("CHILDREN: " + uploadList.children[index]);
             if (uploadList.children[index] === undefined) {
                 listItem = Spektral.addElement(uploadList, 'li');
                 fileName = Spektral.addElement(listItem, 'img', { src: './img/uploads/thumbs/' + item.thumb});
@@ -105,11 +83,10 @@
     function onCreatePost(evt){
         postObj['title'] = titleInput.value;
         postObj['desc'] = descInput.value;
-        postObj['pictures'] = picArray;
-        postObj['latInput'] = latInput.value;
-        postObj['longInput'] = longInput.value;
+        postObj['latitude'] = latInput.value;
+        postObj['longitude'] = longInput.value;
 
-        console.log('New entry: ' + JSON.stringify(postObj));
+        socket.emit('new-post', { entry: postObj });
     }
 
     window.PostScreen = PostScreen;

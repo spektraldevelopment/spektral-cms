@@ -20,37 +20,7 @@ app.use(express.static(__dirname + '/build'));
 
 app.post('/api/upload', function (req, res) {
     tempImageArray.push({file: req.files.userFile.name, thumb: stripExt(req.files.userFile.name) + '-thumb.jpg'});
-    tempImageArray.forEach(logArray);
 });
-
-//app.post('/api/upload', function (req, res) {
-//    //res.send({file: req.files.userFile.originalname, savedAs: req.files.userFile.name}).redirect('back');
-//    tempImageArray.push({file: req.files.userFile.name, thumb: stripExt(req.files.userFile.name) + '-thumb.jpg'});
-//    tempImageArray.forEach(logArray);
-//
-//    lwip.open(req.files.userFile.path, function(err, image){
-//        if (err) {
-//            console.log('lwip error: ' + err);
-//        } else {
-//            image.batch()
-//                .contain(256, 256)
-//                .crop(64, 64)       // crop a 200X200 square from center
-//                .writeFile('./build/img/uploads/thumbs/' + stripExt(req.files.userFile.name) + '-thumb.jpg', function(err){
-//                    if (err) {
-//                        console.log('Crop error: ' + err);
-//                    } else {
-//                        console.log('Crop Complete.');
-//                    }
-//                });
-//        }
-//    });
-//    //This works but feels wrong
-//    res.redirect('back');
-//});
-
-//app.get('/api/getPicList', function(req, res){
-//    res.send(tempImageArray);
-//});
 
 io.on('connection', function (socket) {
 
@@ -63,35 +33,20 @@ io.on('connection', function (socket) {
             createThumb(pathToImage, thumbPath, function(){
                 socket.emit('thumbCreated', { arr: tempImageArray });
             });
-//            lwip.open(pathToImage, function(err, image){
-//                if (err) {
-//                    console.log('lwip error: ' + err);
-//                } else {
-//                    console.log('width: ' + image.width() + ' height: ' + image.height());
-//                    image.batch()
-//                        //.contain(256, 256)
-//                        .crop(64, 64)       // crop a 200X200 square from center
-//                        .writeFile(thumbPath, function(err){
-//                            if (err) {
-//                                console.log('Crop error: ' + err);
-//                            } else {
-//                                console.log('Crop Complete.');
-//                                socket.emit('thumbCreated', { arr: tempImageArray });
-//                            }
-//                        });
-//                }
-//            });
         });
+    });
+
+    socket.on('new-post', function(data){
+        data.entry['pictures'] = tempImageArray;
+        var postArray = jsonFile['posts'];
+        postArray.push(data.entry);
+        writeJsonFile();
+        console.log('new post: ' + JSON.stringify(data.entry));
     });
 
 });
 
 jsonFile = readJsonFile('data.json');
-
-//jsonFile.images[1].path = 'cms/images/iknowthatfeel.jpg';
-//jsonFile.images[1].alt = 'A picture of a bear and a man sitting at a river bank'
-//
-//writeJsonFile();
 
 server.listen(3000, function () {
     console.log('listening on port %d', server.address().port);
@@ -111,9 +66,12 @@ function readJsonFile(filepath, encoding){
 }
 
 function writeJsonFile() {
-    fs.writeFile('app/cms/data.json', JSON.stringify(jsonFile, null, 4), function (err) {
-        if (err) throw err;
-        console.log('It\'s saved!');
+    fs.writeFile('data.json', JSON.stringify(jsonFile, null, 4), function (err) {
+        if (err) {
+            console.log('JSON save error: ' + err);
+        } else {
+            console.log('JSON data saved!');
+        }
     });
 }
 
