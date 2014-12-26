@@ -3,26 +3,42 @@
         {
             "title": "Test Title",
             "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "pictures" : [
+            "longitude": "43.693131",
+            "latitude": "-79.405994",
+            "pictures": [
                 {
-                    "url" : "path/to/picture.jpg",
-                    "alt" : "Alternate description"
+                    "url": "path/to/picture.jpg",
+                    "alt": "Alternate description"
                 }
-            ],
-            "longitude" : "43.693131",
-            "latitude" : "-79.405994"
+            ]
         },
         {
             "title": "Test Title 2",
             "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "pictures" : [
+            "longitude": "43.693131",
+            "latitude": "-79.405994",
+            "pictures": [
                 {
-                    "url" : "path/to/picture2.jpg",
-                    "alt" : "Alternate description2"
+                    "url": "path/to/picture2.jpg",
+                    "alt": "Alternate description2"
                 }
-            ],
-            "longitude" : "43.693131",
-            "latitude" : "-79.405994"
+            ]
+        },
+        {
+            "title": "",
+            "desc": "",
+            "latitude": "",
+            "longitude": "",
+            "pictures": [
+                {
+                    "file": "blazeit.jpg",
+                    "thumb": "blazeit-thumb.jpg"
+                },
+                {
+                    "file": "bunny.jpg",
+                    "thumb": "bunny-thumb.jpg"
+                }
+            ]
         }
     ]
 }
