@@ -1,22 +1,30 @@
 {
   "name": "spektral-cms",
-  "version": "0.0.1",
-  "description": "A lightweight cms",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/spektraldevelopment/spektral-cms.git"
-  },
+  "version": "1.0.0",
+  "description": "A cms that utilizes vue and express",
   "author": "Dave Boyle",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/spektraldevelopment/spektral-cms/issues"
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate"
   },
-  "homepage": "https://github.com/spektraldevelopment/spektral-cms",
   "dependencies": {
-    "express": "^4.10.0"
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "@nuxtjs/vuetify": "0.5.5",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^24.1.0",
+    "jest": "^24.1.0",
+    "vue-jest": "^3.0.3",
+    "nodemon": "^1.18.9"
   }
 }
