@@ -12,10 +12,10 @@ const general = {
     getters: {}
 }
 
-const store = new Vuex.Store({
+const createStore = () => new Vuex.Store({
   modules: {
     general
   }
 })
 
-export default store;
+export default createStore;
