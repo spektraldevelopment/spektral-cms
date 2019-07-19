@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="className">
         <h1 v-if="type === 'h1'" v-show="inEditMode === false">{{mutableText}}</h1>
         <h2 v-if="type === 'h2'" v-show="inEditMode === false">{{mutableText}}</h2>
         <h3 v-if="type === 'h3'" v-show="inEditMode === false">{{mutableText}}</h3>
@@ -28,6 +28,10 @@ export default {
         type: {
             type: String,
             default: 'h1'
+        },
+        className: {
+            type: String,
+            default: ""
         }
     },
     data() {
@@ -53,6 +57,15 @@ export default {
         onCancel() {
             this.inEditMode = false;
             this.mutableText = this.innerText;
+        }
+    },
+    watch: {
+        editMode(newVal) {
+            //If user switches out of edit mode
+            if(newVal === false) {
+                //Take component out of inEditMode
+                this.inEditMode = false;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
       md6
     >
       <button @click="onEditMode">Edit Mode</button>
-      <scHeading :innerText="innerText" :editMode="editMode"/>
+      <scHeading :innerText="innerText" :editMode="editMode" class="foobar"/>
     </v-flex>
   </v-layout>
 </template>
