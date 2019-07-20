@@ -9,7 +9,6 @@
       sm8
       md6
     >
-      <button @click="onEditMode">Edit Mode</button>
       <scHeading :innerText="innerText" :editMode="editMode" class="foobar"/>
     </v-flex>
   </v-layout>
@@ -17,27 +16,23 @@
 
 <script>
 
+import { mapState } from 'vuex';
+
 import scHeading from '../components/spektral-cms/sc-heading';
 
 export default {
   data() {
     return {
-      editMode: false,
       innerText: 'Is this working?'
     }
   },
+  computed: {
+    ...mapState({
+      editMode: state => state.general.editMode
+    })
+  },
   components : {
     scHeading
-  },
-  methods: {
-    onEditMode() {
-      if(this.editMode) {
-        this.editMode = false;
-      } else {
-        this.editMode = true;
-      }
-      console.log('This edit mode: ', this.editMode);
-    }
   }
 }
 </script>
