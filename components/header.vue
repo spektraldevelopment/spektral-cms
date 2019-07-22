@@ -11,20 +11,19 @@
           <v-btn v-if="!isLoggedIn" flat to="/login">Login</v-btn>
         </v-toolbar-items>
       </v-toolbar>
-      <scEditBar></scEditBar>
+      <scEditBar ></scEditBar>
     </div>
 </template>
 
 <script>
 
-import { mapState } from 'vuex';
 import scEditBar from './spektral-cms/sc-editBar';
 
 export default {
   computed: {
-    ...mapState({
-      isLoggedIn: state => state.general.isLoggedIn
-    })
+    isLoggedIn() {
+      return this.$store.state.general.isLoggedIn
+    }
   },
   components: {
     scEditBar

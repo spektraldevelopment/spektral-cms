@@ -15,9 +15,6 @@
 </template>
 
 <script>
-
-import { mapState } from 'vuex';
-
 import scHeading from '../components/spektral-cms/sc-heading';
 
 export default {
@@ -27,9 +24,9 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      editMode: state => state.general.editMode
-    })
+   editMode() {
+      return this.$store.state.general.editMode;
+    },
   },
   components : {
     scHeading
