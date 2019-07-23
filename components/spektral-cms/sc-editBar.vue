@@ -13,10 +13,10 @@ import { mapActions } from "vuex";
 export default {
   computed: {
     isLoggedIn() {
-      return this.$store.state.general.isLoggedIn;
+      return this.$store.state.spektralCMS.isLoggedIn;
     },
     editMode() {
-      return this.$store.state.general.editMode;
+      return this.$store.state.spektralCMS.editMode;
     },
     txtEditMode() {
       //return this.editMode ? ''
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     ...mapActions({
-        ACT_EDIT_MODE: "general/ACT_EDIT_MODE"
+        ACT_EDIT_MODE: "spektralCMS/ACT_EDIT_MODE"
     }),
     onEditToggle() {
       if (this.editMode) {

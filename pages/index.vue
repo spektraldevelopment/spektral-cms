@@ -25,7 +25,7 @@ export default {
   },
   computed: {
    editMode() {
-      return this.$store.state.general.editMode;
+      return this.$store.state.spektralCMS.editMode;
     },
   },
   components : {

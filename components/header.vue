@@ -22,7 +22,7 @@ import scEditBar from './spektral-cms/sc-editBar';
 export default {
   computed: {
     isLoggedIn() {
-      return this.$store.state.general.isLoggedIn
+      return this.$store.state.spektralCMS.isLoggedIn
     }
   },
   components: {
