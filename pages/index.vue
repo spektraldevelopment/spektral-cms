@@ -9,27 +9,32 @@
       sm8
       md6
     >
-      <scHeading :innerText="innerText" :editMode="editMode" class="foobar"/>
+      <scHeading :innerText="mainHeading" :editMode="editMode" class="foobar" @onSave="onHeadingSave"/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 import scHeading from '../components/spektral-cms/sc-heading';
 
 export default {
-  data() {
-    return {
-      innerText: 'Is this working?'
-    }
-  },
   computed: {
    editMode() {
       return this.$store.state.spektralCMS.editMode;
     },
+    mainHeading() {
+      return this.$store.state.main.mainHeading
+    }
   },
   components : {
     scHeading
+  },
+  methods: {
+    ...mapMutations({
+      onHeadingSave: 'main/SET_MAIN_HEADING'
+    })
   }
 }
 </script>

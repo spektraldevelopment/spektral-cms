@@ -53,6 +53,8 @@ export default {
         },
         onSave() {
             this.inEditMode = false;
+
+            this.$emit('onSave', this.mutableText);
         },
         onCancel() {
             this.inEditMode = false;
