@@ -1,11 +1,6 @@
 <template>
-    <div class="sc-heading" :class="className">
-        <h1 v-if="type === 'h1'" v-show="inEditMode === false">{{mutableText}}</h1>
-        <h2 v-if="type === 'h2'" v-show="inEditMode === false">{{mutableText}}</h2>
-        <h3 v-if="type === 'h3'" v-show="inEditMode === false">{{mutableText}}</h3>
-        <h4 v-if="type === 'h4'" v-show="inEditMode === false">{{mutableText}}</h4>
-        <h5 v-if="type === 'h5'" v-show="inEditMode === false">{{mutableText}}</h5>
-        <h6 v-if="type === 'h6'" v-show="inEditMode === false">{{mutableText}}</h6>
+    <div class="sc-paragraph">
+        <p v-show="inEditMode === false">{{mutableText}}</p>
         <input v-show="inEditMode" v-model="mutableText" @input="onInputUpdate"/>
         <div v-show="editMode">
             <button v-show="inEditMode === false" @click="onEdit">Edit</button>
@@ -24,10 +19,6 @@ export default {
         editMode: {
             type: Boolean,
             default: false
-        },
-        type: {
-            type: String,
-            default: 'h1'
         },
         className: {
             type: String,
@@ -72,6 +63,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>

@@ -1,3 +1,4 @@
 export default () => ({
-  mainHeading: 'This is the main header!!!'
+  mainHeading: 'This is the main header!!!',
+  mainParagraph: 'COMing SoOn!!!!'
 })
